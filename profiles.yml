@@ -1,9 +1,22 @@
-duckdb:
+config:
+  send_anonymous_usage_stats: false
+
+warehouse:
+  target: dev
   outputs:
     dev:
-      type: duckdb
-      path: "{{ env_var('JAFFLE_DB_PATH', './reports/jaffle_shop.duckdb') }}"
-      database: "{{ env_var('JAFFLE_DB_NAME', 'jaffle_shop') }}"
-      schema: "{{ env_var('JAFFLE_TARGET_SCHEMA', 'analytics') }}"
-      threads: 4
-  target: dev
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      # authenticator: username_password_mfa # Enable if using DUO MFA authentication
+
+      role: "{{ env_var('DBT_ROLE') }}"
+      database: "{{ env_var('DBT_DATABASE') }}"
+      warehouse: "{{ env_var('DBT_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_SCHEMA') }}"
+
+      threads: 8
+      query_tag: dbt_dev
+

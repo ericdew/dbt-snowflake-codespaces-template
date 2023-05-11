@@ -1,9 +1,6 @@
-.venv
+.DS_Store
 target/
+dbt_modules/
 dbt_packages/
 logs/
-*.duckdb
-*.duckdb.wal
-reports/sources/*.csv
-.meltano
-.DS_Store
+.env
