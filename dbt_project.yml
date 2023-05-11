@@ -1,7 +1,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: "jaffle_shop"
+name: "warehouse"
 version: "1.0.0"
 config-version: 2
 
@@ -14,7 +14,7 @@ profile: "warehouse"
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
+seed-paths: ["static"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -23,19 +23,23 @@ clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-vars:
-  truncate_timespan_to: "{{ current_timestamp() }}"
-
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In this example config, we tell dbt to build all models in the example/ directory
-# as tables. These settings can be overridden in the individual model files
-# using the `{{ config(...) }}` macro.
+seeds:
+  schema: static
 
 models:
-  jaffle_shop:
-    staging:
-      +materialized: view
-    marts:
+  transient: false
+  materialized: view
+  incremental_strategy: merge
+
+  # syncs added and removed columns on incremental models
+  # note: data will not be backfilled for new columns, --full-refresh or manual update required
+  +on_schema_change: "sync_all_columns"
+
+  warehouse:
+    bronze:
+      schema: bronze
+    silver:
+      schema: silver
+    gold:
+      schema: gold
       +materialized: table
