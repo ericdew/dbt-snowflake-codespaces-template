@@ -1,5 +1,5 @@
 {
-  "name": "Python 3",
+  "name": "DBT Development",
   "image": "mcr.microsoft.com/devcontainers/python:0-3.10-bullseye",
   "features": {
     "ghcr.io/devcontainers-contrib/features/black:1": {},
@@ -23,6 +23,7 @@
       "extensions": [
         "dorzey.vscode-sqlfluff",
         "esbenp.prettier-vscode",
+        "innoverio.vscode-dbt-power-user",
         "GitHub.codespaces"
       ]
     }
