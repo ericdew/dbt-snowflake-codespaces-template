@@ -2,13 +2,10 @@
   "name": "DBT",
   "image": "mcr.microsoft.com/devcontainers/python:0-3.10-bullseye",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
+    "ghcr.io/devcontainers/features/node:1": {}
   },
-  
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "task deps",
-
+  "postCreateCommand": "python -m pip install --progress-bar off -r requirements.txt && dbt deps",
   // Configure tool-specific properties
   "customizations": {
     "vscode": {
